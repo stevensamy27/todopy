@@ -12,12 +12,14 @@ con.commit()
 
 def List():
     # Logging
+    todos = []
     print("Listing tasks")
 
     # Database interaction
     for row in cur.execute("Select task from todos"):
-        print(row)
-
+        todos.append(row)
+    return todos
+    
 def Add(task):
     # Logging
     print(f"Adding task [%s]" % task)
