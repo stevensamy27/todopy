@@ -21,7 +21,7 @@ def List():
     # Database interaction
     rows_in_database =  cur.execute("Select task from todos")
     for row in rows_in_database:
-        todos.append(row)
+        todos.append(row[0])
 
     return todos
     
@@ -29,8 +29,15 @@ def List():
 Add: Should create a new task to the database given the input
 '''
 def Add(task):
+    
     # Logging
     print(f"Adding task [%s]" % task)
+    
+    todos = List()
+    for todo in todos:
+        if task == todo:
+            print("Cannot add duplicated values")
+            return
 
     # Database interaction
     cur.execute("INSERT INTO todos VALUES ('%s')" % task)
