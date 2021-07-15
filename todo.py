@@ -9,17 +9,25 @@ cur.execute('''CREATE TABLE  IF NOT EXISTS todos
 con.commit()
 
 
-
+'''
+List: should list all tasks in the database
+'''
 def List():
-    # Logging
     todos = []
+
+    # Logging
     print("Listing tasks")
 
     # Database interaction
-    for row in cur.execute("Select task from todos"):
+    rows_in_database =  cur.execute("Select task from todos")
+    for row in rows_in_database:
         todos.append(row)
+
     return todos
     
+'''
+Add: Should create a new task to the database given the input
+'''
 def Add(task):
     # Logging
     print(f"Adding task [%s]" % task)
