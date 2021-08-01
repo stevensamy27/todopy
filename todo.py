@@ -4,7 +4,7 @@
 # DB_PASS = "123"
 import psycopg2
 ## Initial database connection
-con = psycopg2.connect(host="127.0.0.1", dbname="steven1", user="postgres", password="123" )
+con = psycopg2.connect(host="127.0.0.1", dbname="steven1", user="postgres", password="JYPmcq?/5ByFm.S" )
 cur = con.cursor()
 
 ## Initial database tables
