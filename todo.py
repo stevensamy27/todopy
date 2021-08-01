@@ -20,11 +20,12 @@ def List():
     print("Listing tasks")
 
     # Database interaction
-    rows_in_database =  cur.execute("Select task from todos")
-    for row in rows_in_database:
-        todos.append(row)
-
+    cur.execute("Select task from todos")
+    result = cur.fetchall()
+    print(result)
+    
     return todos
+    
     
 '''
 Add: Should create a new task to the database given the input
