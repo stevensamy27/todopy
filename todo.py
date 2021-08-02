@@ -5,6 +5,8 @@ con = psycopg2.connect(host="localhost", dbname="steven3", user="postgres", pass
 cur = con.cursor()
 
 ## Initial database tables
+
+
 cur.execute('''CREATE TABLE  IF NOT EXISTS todos
                (task text)''')
 con.commit()
@@ -31,10 +33,26 @@ def List():
 Add: Should create a new task to the database given the input
 '''
 def Add(task):
-    # Logging
-    print(f"Adding task [%s]" % task)
+      # Logging
+    print(f"Adding task [%s]" %task)
+    cur.execute ('SELECT * FROM todos')
+    for row in cur:
+        exit = ('%r' % (row,))
+        print(exit)
+        if row == task:
+            print("Invalid input!")
+        else:
+            print(f"Adding task [%s]" %task)
 
     # Database interaction
-    cur.execute("INSERT INTO todos VALUES ('%s')" % task)
+    cur.execute ('SELECT * FROM todos')
+    for row in cur:
+        exit = ('%r' % (row,))
+        print(exit)
+        if row == task:
+            print("Invalid input!")
+        else:
+            print(f"Adding task [%s]" %task)
+       
     con.commit()
     con.close()
