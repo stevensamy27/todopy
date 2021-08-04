@@ -1,9 +1,11 @@
-import sqlite3
+
+import psycopg2
 ## Initial database connection
-con = sqlite3.connect('example.db')
+con = psycopg2.connect(host="localhost", dbname="steven3", user="postgres", password="JYPmcq?/5ByFm.S",port = "5432" )
 cur = con.cursor()
 
 ## Initial database tables
+
 cur.execute('''CREATE TABLE  IF NOT EXISTS todos
                (task text)''')
 con.commit()
@@ -19,26 +21,38 @@ def List():
     print("Listing tasks")
 
     # Database interaction
-    rows_in_database =  cur.execute("Select task from todos")
-    for row in rows_in_database:
-        todos.append(row[0])
 
+    cur.execute("Select task from todos")
+    result = cur.fetchall()
+    print(result)
+    
     return todos
     
 '''
 Add: Should create a new task to the database given the input
 '''
 def Add(task):
-    
-    # Logging
-    print(f"Adding task [%s]" % task)
-    
-    todos = List()
-    for todo in todos:
-        if task == todo:
-            print("Cannot add duplicated values")
-            return
+      # Logging
+    print(f"Adding task [%s]" %task)
+    cur.execute ('SELECT * FROM todos')
+    for row in cur:
+        exit = ('%r' % (row,))
+        print(exit)
+        if row == task:
+            print("Invalid input!")
+        else:
+            print(f"Adding task [%s]" %task)
+
 
     # Database interaction
-    cur.execute("INSERT INTO todos VALUES ('%s')" % task)
+    cur.execute ('SELECT * FROM todos')
+    for row in cur:
+        exit = ('%r' % (row,))
+        print(exit)
+        if row == task:
+            print("Invalid input!")
+        else:
+            print(f"Adding task [%s]" %task)
+       
     con.commit()
+    con.close()
