@@ -6,7 +6,6 @@ cur = con.cursor()
 
 ## Initial database tables
 
-
 cur.execute('''CREATE TABLE  IF NOT EXISTS todos
                (task text)''')
 con.commit()
@@ -28,7 +27,6 @@ def List():
     print(result)
     
     return todos
-    
     
 '''
 Add: Should create a new task to the database given the input
