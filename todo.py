@@ -22,6 +22,7 @@ def List():
     print("Listing tasks")
 
     # Database interaction
+
     cur.execute("Select task from todos")
     result = cur.fetchall()
     print(result)
@@ -43,6 +44,7 @@ def Add(task):
             print("Invalid input!")
         else:
             print(f"Adding task [%s]" %task)
+
 
     # Database interaction
     cur.execute ('SELECT * FROM todos')
