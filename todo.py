@@ -1,13 +1,29 @@
 
 import psycopg2
+
+# userid
+userid = input("UserID Please = ")
+
 ## Initial database connection
 con = psycopg2.connect(host="localhost", dbname="steven3", user="postgres", password="JYPmcq?/5ByFm.S",port = "5432" )
 cur = con.cursor()
 
 ## Initial database tables
 
-cur.execute('''CREATE TABLE  IF NOT EXISTS todos
-               (task text)''')
+cur.execute('''
+    CREATE TABLE  IF NOT EXISTS users (
+        UserID serial primary key,
+        UserName text
+    );
+
+    CREATE TABLE  IF NOT EXISTS todos (
+        TaskID serial primary key,
+        Task text,
+        UserID int,
+        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+
+    );
+    ''')
 con.commit()
 
 
@@ -22,7 +38,7 @@ def List():
 
     # Database interaction
 
-    cur.execute("Select task from todos")
+    cur.execute("Select task from todos where userid = %s" , userid)
     result = cur.fetchall()
     
     return result
@@ -42,5 +58,5 @@ def Add(task):
             return
 
     # Database interaction
-    cur.execute("INSERT INTO todos (task) VALUES(%s)", (task,))
+    cur.execute("INSERT INTO todos (Task, UserID) VALUES(%s, %s)", (task, userid,))
     con.commit()
