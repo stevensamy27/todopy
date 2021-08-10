@@ -34,10 +34,13 @@ def Add(task):
     # Logging
     print(f"Adding task [%s]" %task)
 
-    # Database interaction
-    # cur.execute("insert INTO todos(task) values(%s)" ,x)
+    # Validating the data is not duplicate
+    tasks = List()
+    for itask in tasks:
+        if itask[0] == task:
+            print("The input task exist in the database already")
+            return
 
+    # Database interaction
     cur.execute("INSERT INTO todos (task) VALUES(%s)", (task,))
-    con.commit() # <- We MUST commit to reflect the inserted data
-       
     con.commit()
