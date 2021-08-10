@@ -24,35 +24,20 @@ def List():
 
     cur.execute("Select task from todos")
     result = cur.fetchall()
-    print(result)
     
-    return todos
+    return result
     
 '''
 Add: Should create a new task to the database given the input
 '''
 def Add(task):
-      # Logging
+    # Logging
     print(f"Adding task [%s]" %task)
-    cur.execute ('SELECT * FROM todos')
-    for row in cur:
-        exit = ('%r' % (row,))
-        print(exit)
-        if row == task:
-            print("Invalid input!")
-        else:
-            print(f"Adding task [%s]" %task)
-
 
     # Database interaction
-    cur.execute ('SELECT * FROM todos')
-    for row in cur:
-        exit = ('%r' % (row,))
-        print(exit)
-        if row == task:
-            print("Invalid input!")
-        else:
-            print(f"Adding task [%s]" %task)
+    # cur.execute("insert INTO todos(task) values(%s)" ,x)
+
+    cur.execute("INSERT INTO todos (task) VALUES(%s)", (task,))
+    con.commit() # <- We MUST commit to reflect the inserted data
        
     con.commit()
-    con.close()
