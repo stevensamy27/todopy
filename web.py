@@ -1,7 +1,5 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import todo
-import json
-
+import todo, json, cgi
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -22,7 +20,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                             }
                         }
         self.wfile.write(json.dumps([todos]).encode("utf-8"))
-
+    def do_POST(self):
+        length = int(self.headers.get('content-length', 0))
+        data = json.loads(self.rfile.read(length))
+        print(data["task"])
+        todo.Add(data["task"])
 
 
 def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
